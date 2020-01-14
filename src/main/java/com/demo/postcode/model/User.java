@@ -1,5 +1,7 @@
 package com.demo.postcode.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
@@ -11,14 +13,20 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
-
-@Entity
-@Table(name = "t_user")
 @Data
+@Table(name = "t_user")
+@DynamicInsert
+@DynamicUpdate
+@Entity
 @Builder
 public class User {
 
@@ -28,23 +36,17 @@ public class User {
 
     @Column(nullable = false)
     @Length(min=2,max = 30)
-    @Pattern(regexp = "^[a-zA-Z]+$")
     private String firstName;
 
     @Column(length=30,nullable = false)
     private String lastName;
 
-    @Column(length =2)
-    private Integer age;
+    @Column(columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
+    private BigDecimal balance;
 
-    @Column
-    private BigDecimal height;
+    @Pattern(regexp = "^\\d{5}$")
+    private String postcode;
 
-    @Temporal(TemporalType.DATE)
-    private Date birthday;
-
-    @Column(nullable = false)
-    private Boolean active;
 
     @Column( insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" )
     @Temporal( TemporalType.TIMESTAMP )
