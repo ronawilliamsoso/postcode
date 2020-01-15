@@ -1,0 +1,1 @@
+insert  into t_user (first_name, last_name, postcode)values ('wei', 'wang', '40223');

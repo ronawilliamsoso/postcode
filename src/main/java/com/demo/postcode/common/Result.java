@@ -1,14 +1,11 @@
 package com.demo.postcode.common;
 
-import java.io.Serializable;
-
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@ApiModel
+
 @Getter
 @Setter
 @AllArgsConstructor

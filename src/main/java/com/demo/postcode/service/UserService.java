@@ -1,51 +1,57 @@
 package com.demo.postcode.service;
 
+import com.demo.postcode.common.Status;
 import com.demo.postcode.model.User;
 import com.demo.postcode.repository.UserRepository;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService{
 
-	private  UserRepository userRepository;
+	private final  UserRepository userRepository;
 
-	public User findById(Integer userId) {
+	private final List<String> allPostcodeService = List.of("40223","40224","40225");
 
-		return userRepository.findById(userId).get();
+	public int addUser(User user){
+		if(checkIfPostCodeExist(user.getPostcode())){
+			userRepository.save(user);
+			return Status.SUCCESS;
+		}else{
+			return Status.FAIL;
+		}
 	}
 
+	/**
+	 * @author wei wang
+	 * when update an users postcode,userId is not null,user should be existing,new postcode should be exist too
+	 * */
 
-	public void add(User user) {
-
-		 userRepository.save(user);
+	public String updateUser(User user){
+		if(user.getUserId()!=null){
+			if(userRepository.existsById(user.getUserId())==true){
+				if(checkIfPostCodeExist(user.getPostcode())){
+					User updateUser = User.builder().userId(user.getUserId()).postcode(user.getPostcode()).build();
+					userRepository.save(updateUser);
+					return "";
+				}else{
+					return "invalid postcode";
+				}
+			}else{
+				return "user not exist";
+			}
+		}else{
+			return "user id null";
+		}
 	}
 
-
-	public void deleteById(Integer userId){
-		userRepository.deleteById(userId);
+	private Boolean checkIfPostCodeExist(String postcode){
+		if(allPostcodeService.contains(postcode)){
+			return true;
+		}else{
+			return false;
+		}
 	}
-
-
-
-//	public List<User> findByAgeSmallerThan(Integer age) {
-//		Integer size = 10;
-//		Integer page = 0;
-//		String sort1 = "firstName";
-//		Sort sort = new Sort(Sort.Direction.ASC,sort1);
-//		Pageable pageable = PageRequest.of(page,size,sort);
-//
-//		List<Customer> list = customerRepository.findByAgeLessThanEqual(age, pageable);
-//		return list;
-//
-//	}
-
 }
