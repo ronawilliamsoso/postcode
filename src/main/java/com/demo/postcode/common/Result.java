@@ -9,14 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Result<T>  {
+public class Result< T >{
 
-	@ApiModelProperty(value = "200:success,201:fail")
-	private int status;
+  @ApiModelProperty( value = "200:success,201:fail" )
+  private int status;
 
-	@ApiModelProperty(value = "object,list...")
-	private T data;
+  @ApiModelProperty( value = "object,list..." )
+  private T data;
 
-	@ApiModelProperty(value = "message")
-	private String message;
+  @ApiModelProperty( value = "message" )
+  private String message;
 }

@@ -10,10 +10,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
@@ -22,8 +20,6 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @Builder
 @DynamicUpdate
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
     @Id
@@ -33,13 +29,11 @@ public class User {
     @Length(min=2,max = 50)
     private String firstName;
 
-
     @Length(min=1,max = 50)
     private String lastName;
 
     @Pattern(regexp = "^\\d{5}$")
     private String postcode;
-
 
     @Column( insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" )
     @Temporal( TemporalType.TIMESTAMP )

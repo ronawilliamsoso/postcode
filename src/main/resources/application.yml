@@ -1,5 +1,6 @@
 spring:
   datasource:
+    #keep in-memory database in existence after connection closes.
     url: jdbc:h2:mem:h2test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     platform: h2
     username: sa

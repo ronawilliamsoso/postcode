@@ -15,14 +15,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig{
 
-  ApiInfo apiInfo() {
+  ApiInfo apiInfo(){
     return new ApiInfoBuilder().title("documents for api").description("postcode").build();
   }
 
   @Bean
-  public Docket customImplementation() {
-    return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))//// only put controllers with ApiOperation annotation into the document
-        .paths(PathSelectors.any()).build();
+  public Docket customImplementation(){
+    return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(
+        RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                                                  .paths(PathSelectors.any()).build();
   }
 
 }
