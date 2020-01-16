@@ -51,7 +51,7 @@ public class UserControllerTests{
 
   @Test
   @DisplayName( "/user/findOne" )
-  public void test_find_a_user_by_id() throws Exception{
+  public void test_find_one_user_by_id() throws Exception{
     mockMvc.perform(get("/user/findOne/1").accept(CONTENT_TYPE)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.data").isNotEmpty());
   }
 
@@ -60,7 +60,7 @@ public class UserControllerTests{
   public void test_update_partially_one_user() throws Exception{
     refreshParams();
     User newUser = User.builder().userId(1).postcode(postcode).build();
-    mockMvc.perform(post("/user/register").contentType(CONTENT_TYPE).content(asJsonString(newUser))).andDo(print()).andExpect(status().isOk())
+    mockMvc.perform(post("/user/update").contentType(CONTENT_TYPE).content(asJsonString(newUser))).andDo(print()).andExpect(status().isOk())
            .andExpect(jsonPath("$.message").value("success"));
   }
 
@@ -71,7 +71,7 @@ public class UserControllerTests{
            .andExpect(jsonPath("$.message").value("success"));
   }
 
-  public static String asJsonString(final Object obj){
+  private static String asJsonString(final Object obj){
     try{
       return new ObjectMapper().writeValueAsString(obj);
     }catch ( Exception e ){

@@ -10,8 +10,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
@@ -20,6 +22,8 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @Builder
 @DynamicUpdate
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
