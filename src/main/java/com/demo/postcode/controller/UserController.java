@@ -73,8 +73,9 @@ public class UserController{
   @PostMapping( value = "/update" )
   public Result< Object > update(@RequestBody final User user){
     if( user.getUserId() != null ){
-      User userOld = userRepository.getOne(user.getUserId());
-      if( userOld != null ){
+      Optional< User > userOldOptional = userRepository.findById(user.getUserId());
+      if( userOldOptional.isPresent()){
+        User userOld = userOldOptional.get();
         copyNonNullProperties(user ,userOld);
         userRepository.save(userOld);
         return ResultFactory.getSuccessResult();
